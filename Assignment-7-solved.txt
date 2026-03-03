@@ -1,0 +1,88 @@
+Name- Kale Sushant Adhirath
+RollNo.- 96705
+
+1. Write a query that lists each order number followed by the name of the
+customer who made the order.
+
+Ans- SELECT o.onum,c.cname
+    -> FROM customers c
+    -> INNER JOIN orders o
+    -> ON c.cnum = o.cnum;
++------+----------+
+| onum | cname    |
++------+----------+
+| 3001 | Cisneros |
+| 3003 | Hoffman  |
+| 3002 | Pereira  |
+| 3005 | Liu      |
+| 3006 | Cisneros |
+| 3009 | Giovanni |
+| 3007 | Grass    |
+| 3008 | Clemens  |
+| 3010 | Grass    |
+| 3011 | Clemens  |
++------+----------+
+10 rows in set (0.00 sec)
+
+2. Write a query that gives the names of both the salesperson and the
+customer for each order along with the order number.
+
+Ans- SELECT o.onum,c.cname,s.sname
+    -> FROM customers c INNER JOIN orders o
+    -> ON c.cnum = o.cnum
+    -> INNER JOIN salespeople s
+    -> ON c.snum = s.snum
+    -> ORDER BY o.onum ;
++------+----------+---------+
+| onum | cname    | sname   |
++------+----------+---------+
+| 3001 | Cisneros | Rifkin  |
+| 3002 | Pereira  | Motika  |
+| 3003 | Hoffman  | Peel    |
+| 3005 | Liu      | Serres  |
+| 3006 | Cisneros | Rifkin  |
+| 3007 | Grass    | Serres  |
+| 3008 | Clemens  | Peel    |
+| 3009 | Giovanni | Axelrod |
+| 3010 | Grass    | Serres  |
+| 3011 | Clemens  | Peel    |
++------+----------+---------+
+10 rows in set (0.00 sec)
+
+3. Write a query that produces all customers serviced by salespeople with a
+commission above 12%. Display the customer’s name, the salesperson’s
+name, and the salesperson’s rate of commission.
+
+Ans- SELECT c.cname,s.sname,s.comm
+    -> FROM customers c INNER JOIN salespeople s
+    -> ON c.snum=s.snum
+    -> HAVING s.comm>0.12;
++----------+--------+------+
+| cname    | sname  | comm |
++----------+--------+------+
+| Liu      | Serres | 0.13 |
+| Grass    | Serres | 0.13 |
+| Cisneros | Rifkin | 0.15 |
++----------+--------+------+
+3 rows in set (0.00 sec)
+
+4. Write a query that calculates the commission earned by each
+salesperson for orders placed by customers with a rating above 100.
+
+Ans- 
+
+5. Write a query that produces all pairs of salespeople who are living in
+the same city. Exclude combinations of salespeople with themselves as
+well as duplicate rows with the order reversed
+
+Ans- SELECT s1.sname AS salesperson1,s2.sname AS salesperson2,s1.city
+    -> FROM salespeople s1
+    -> INNER JOIN salespeople s2
+    -> ON s1.city=s2.city
+    ->  AND s1.snum<s2.snum;
++--------------+--------------+--------+
+| salesperson1 | salesperson2 | city   |
++--------------+--------------+--------+
+| Peel         | Motika       | London |
++--------------+--------------+--------+
+1 row in set (0.00 sec)
