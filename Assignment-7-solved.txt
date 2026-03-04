@@ -69,7 +69,23 @@ Ans- SELECT c.cname,s.sname,s.comm
 4. Write a query that calculates the commission earned by each
 salesperson for orders placed by customers with a rating above 100.
 
-Ans- 
+Ans- SELECT o.onum,s.comm,(s.comm * o.amt),c.rating
+    -> FROM salespeople s INNER JOIN orders o
+    -> ON s.snum = o.snum
+    -> INNER JOIN customers c
+    -> ON c.cnum = o.cnum
+    -> HAVING c.rating>100;
++------+------+------------------+--------+
+| onum | comm | (s.comm * o.amt) | rating |
++------+------+------------------+--------+
+| 3009 | 0.10 |         171.3230 |    200 |
+| 3005 | 0.13 |         670.8585 |    200 |
+| 3010 | 0.13 |          40.2935 |    300 |
+| 3007 | 0.13 |           9.8475 |    300 |
+| 3006 | 0.15 |         164.7240 |    300 |
+| 3001 | 0.15 |           2.8035 |    300 |
++------+------+------------------+--------+
+6 rows in set (0.00 sec)
 
 5. Write a query that produces all pairs of salespeople who are living in
 the same city. Exclude combinations of salespeople with themselves as
@@ -85,4 +101,5 @@ Ans- SELECT s1.sname AS salesperson1,s2.sname AS salesperson2,s1.city
 +--------------+--------------+--------+
 | Peel         | Motika       | London |
 +--------------+--------------+--------+
+
 1 row in set (0.00 sec)
