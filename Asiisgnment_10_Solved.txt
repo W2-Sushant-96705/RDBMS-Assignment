@@ -1,0 +1,159 @@
+Name-Kale Sushant Adhirath
+RollNo.-96705
+
+1. Write a procedure that computes the perimeter and the area of a 
+rectangle. Define your own values for the length and width. (Assuming 
+that L and W are the length and width of the rectangle,  
+Perimeter = 2*(L+W) and Area = L*W. 
+ 
+
+ Step1- DROP PROCEDURE IF EXISTS q1;
+
+ DELIMITER $$
+ CREATE PROCEDURE q1(length INT, width INT)
+ BEGIN
+    DECLARE q_peri DOUBLE;
+    DECLARE q_area DOUBLE;
+
+    SET q_peri = 2 * (length + width) ;
+    SET q_area = length * width;
+
+    SELECT q_peri AS perimeter, q_area AS area;
+ END;
+ $$
+ DELIMITER ;
+
+Step2- CALL q1(2,2);
++-----------+------+
+| perimeter | area |
++-----------+------+
+|         8 |    4 |
++-----------+------+
+1 row in set (0.00 sec)
+
+2. Write a procedure that declares an integer variable called num, assigns 
+a value to it, computes and inserts into the temp table the value of the 
+variable itself, its square, and its cube. 
+ 
+Step1- DROP PROCEDURE IF EXISTS q2;
+
+DELIMITER $$
+CREATE PROCEDURE q2()
+BEGIN
+    DECLARE num INT;
+    DECLARE int_square INT;
+    DECLARE int_cube INT;
+    
+    SET num = 5;
+    SET int_square = num * num;
+    SET int_cube = num * num * num;
+    
+    SELECT num, int_square AS square, int_cube AS cube1;
+    CREATE TABLE temp(num INT, int_square INT, int_cube INT);
+    SELECT * FROM temp;
+    INSERT INTO temp VALUES(num, int_square, int_cube);
+END;
+$$
+DELIMITER ;
+
+Step2- CALL q2();
++------+--------+-------+
+| num  | square | cube1 |
++------+--------+-------+
+|    5 |     25 |   125 |
++------+--------+-------+
+1 row in set (0.00 sec)
+
+Empty set (0.02 sec)
+
+3. Create a procedure to Convert a temperature in Fahrenheit (F) to its 
+   equivalent in Celsius (C) and vice versa. The required formulae are 
+   C= (F-32) *5/9      F= 9/5*C + 32 
+ 
+ DROP PROCEDURE IF EXISTS q3;
+
+ DELIMITER $$
+ CREATE PROCEDURE q3(temperature DOUBLE, ch1 char )
+ BEGIN
+    DECLARE temp_farenheit DOUBLE;
+    DECLARE temp_celcius DOUBLE;
+
+    IF temperature AND ch1='f' THEN
+    SET temp_celcius = temperature - 32 * (5/9);
+    ELSE
+    SET temp_farenheit = (9/5) * temperature + 32;
+    END IF;
+
+    SELECT temp_celcius AS celcius, temp_farenheit AS fahrenheit;
+ END;
+ $$
+
+ DELIMITER ; 
+
+4. Create a procedure to Convert a number of inches into yards, feet, and 
+   inches. For example, 124 inches equals 3 yards, 1 foot, and 4 inches. 
+ 
+Step1- DROP PROCEDURE IF EXISTS q4;
+
+DELIMITER $$
+CREATE PROCEDURE q4(inches INT)
+BEGIN
+    DECLARE yards INT;
+    DECLARE foot INT;
+    DECLARE y_inches INT;
+
+    SET yards = inches % 36;
+    SET foot = yards / 12;
+    SET y_inches = yards % 12;
+
+    SELECT inches,'inches equals ', yards, ' yards , ', foot, ' foot , ', y_inches, ' inches';
+END;
+$$
+
+DELIMITER ;
+
+Step2- CALL q4(124);
+
+5. Create a procedure to read two real numbers and tell whether the 
+product of the two numbers is equal to or greater than 100.
+
+DROP PROCEDURE IF EXISTS q5;
+
+DELIMITER $$
+CREATE PROCEDURE q5(real1 REAL, real2 REAL)
+BEGIN
+    DECLARE multiplication REAL;
+    DECLARE a VARCHAR(50);
+    SET multiplication = real1 * real2;
+    IF (multiplication > 100) THEN 
+    SET a= "PRODUCT IS GREATER THAN 100";
+    ELSE 
+    SET a = "PRODUCT IS SMALLER THAN 100";
+    END IF;
+
+    SELECT multiplication AS product, a;
+END;
+$$
+
+DELIMITER ;
+
+CALL q5(12,9);
++---------+-----------------------------+
+| product | a                           |
++---------+-----------------------------+
+|     108 | PRODUCT IS GREATER THAN 100 |
++---------+-----------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+CALL q5(12,8);
++---------+-----------------------------+
+| product | a                           |
++---------+-----------------------------+
+|      96 | PRODUCT IS SMALLER THAN 100 |
++---------+-----------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
