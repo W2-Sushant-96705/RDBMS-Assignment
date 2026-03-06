@@ -1,0 +1,87 @@
+Name- Kale Sushant Adhirath
+RollNo.- 96705
+
+1.Create an index that will enable a user to pull orders for
+ ‘1990-10-03’ out of the Orders table quickly.
+
+STEP 1 - EXPLAIN FORMAT = JSON
+	 SELECT * FROM orders                      
+         WHERE odate = '1990-10-03';
+STEP 2 - CREATE INDEX index_odate ON orders(odate);
+STEP 3 - DESC orders;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| onum  | int          | YES  |     | NULL    |       |
+| amt   | decimal(7,2) | YES  |     | NULL    |       |
+| odate | date         | YES  | MUL | NULL    |       |
+| cnum  | int          | YES  |     | NULL    |       |
+| snum  | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+2.If the Orders table has already been created, how can you force the
+ onum field to be unique (assume all current values are unique)?
+
+Ans- 
+STEP 1 - ALTER TABLE orders 
+	 ADD CONSTRAINT or_onum UNIQUE (onum);
+
+STEP 2 - DESC orders;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| onum  | int          | YES  | UNI | NULL    |       |
+| amt   | decimal(7,2) | YES  |     | NULL    |       |
+| odate | date         | YES  | MUL | NULL    |       |
+| cnum  | int          | YES  |     | NULL    |       |
+| snum  | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+3.Create an index that would permit salesperson to retrieve his orders.
+
+Ans- 
+
+STEP 1 - CREATE INDEX idex_sperson_orders ON orders(snum);
+
+STEP 2 -DESC orders;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| onum  | int          | YES  | UNI | NULL    |       |
+| amt   | decimal(7,2) | YES  |     | NULL    |       |
+| odate | date         | YES  | MUL | NULL    |       |
+| cnum  | int          | YES  |     | NULL    |       |
+| snum  | int          | YES  | MUL | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+4.Let us assume that each salesperson is to have only one customer of a
+ given rating, and this is currently the case. Create an index that
+ enforces it.
+
+Ans- ALTER TABLE customers
+    -> ADD CONSTRAINT uni_sperson_rating UNIQUE(snum,rating);
+
+OUTPUT:-
+ERROR 1062 (23000): Duplicate entry '1001-100' for key 'customers.uni_sperson_rating'
+
+5.Create an index to speed up searching order on a given date by given
+customer.
+
+Ans-
+
+STEP 1- CREATE INDEX idx_date_customer ON orders(odate,cnum);
+
+STEP 2- DESC orders;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| onum  | int          | YES  | UNI | NULL    |       |
+| amt   | decimal(7,2) | YES  |     | NULL    |       |
+| odate | date         | YES  | MUL | NULL    |       |
+| cnum  | int          | YES  |     | NULL    |       |
+| snum  | int          | YES  | MUL | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec) 
