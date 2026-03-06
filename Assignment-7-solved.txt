@@ -103,3 +103,287 @@ Ans- SELECT s1.sname AS salesperson1,s2.sname AS salesperson2,s1.city
 +--------------+--------------+--------+
 
 1 row in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. Display the Supplier name and the Quantity sold. 
+SELECT s.sname, SUM(sp.qty)
+FROM s JOIN sp
+ON s.`S#` = sp.`S#`
+GROUP BY s.sname;
+
++-------+-------------+
+| sname | SUM(sp.qty) |
++-------+-------------+
+| Smith |         900 |
+| Jones |        3200 |
+| Blake |         700 |
+| Clark |         600 |
+| Adams |        3100 |
++-------+-------------+
+5 rows in set (0.01 sec)
+
+2. Display the Part name and Quantity sold. 
+
+SELECT p.pname, SUM(sp.qty)
+FROM p JOIN sp
+ON p.`P#` = sp.`P#`
+GROUP BY p.pname;
+
++-------+-------------+
+| pname | SUM(sp.qty) |
++-------+-------------+
+| Nut   |        1000 |
+| Screw |        4800 |
+| Cam   |        1100 |
+| Cog   |        1300 |
+| Bolt  |         300 |
++-------+-------------+
+5 rows in set (0.00 sec)
+
+3. Display the Job name and Quantity sold
+
+SELECT j.jname, SUM(sp.qty)
+FROM j JOIN sp
+ON j.`J#` = sp.`J#`
+GROUP BY j.jname;
+
++----------+-------------+
+| jname    | SUM(sp.qty) |
++----------+-------------+
+| Sorter   |         800 |
+| Console  |        3300 |
+| Punch    |        1200 |
+| Reader   |         500 |
+| Collator |        1100 |
+| Terminal |         400 |
+| Tape     |        1200 |
++----------+-------------+
+7 rows in set (0.00 sec)
+
+4. Display the Supplier name, Part name, Job name and Quantity sold. 
+SELECT s.sname , p.pname,j.jname , sp.qty
+FROM sp 
+JOIN s ON sp.`S#` = s.`S#`
+JOIN p ON sp.`P#` = p.`P#`
+JOIN j on sp.`J#` = j.`J#`;
+
++-------+-------+----------+------+
+| sname | pname | jname    | qty  |
++-------+-------+----------+------+
+| Jones | Screw | Sorter   |  400 |
+| Blake | Screw | Sorter   |  200 |
+| Smith | Nut   | Sorter   |  200 |
+| Adams | Cog   | Punch    |  200 |
+| Jones | Cam   | Punch    |  100 |
+| Blake | Screw | Punch    |  500 |
+| Jones | Screw | Punch    |  200 |
+| Adams | Bolt  | Punch    |  200 |
+| Clark | Cog   | Reader   |  300 |
+| Jones | Screw | Reader   |  200 |
+| Adams | Cog   | Console  |  500 |
+| Adams | Cam   | Console  |  400 |
+| Adams | Screw | Console  |  800 |
+| Jones | Screw | Console  |  500 |
+| Adams | Screw | Console  |  200 |
+| Adams | Bolt  | Console  |  100 |
+| Smith | Nut   | Console  |  700 |
+| Adams | Nut   | Console  |  100 |
+| Adams | Cam   | Collator |  500 |
+| Jones | Screw | Collator |  600 |
+| Jones | Screw | Terminal |  400 |
+| Clark | Cog   | Tape     |  300 |
+| Adams | Cam   | Tape     |  100 |
+| Jones | Screw | Tape     |  800 |
++-------+-------+----------+------+
+24 rows in set (0.01 sec)
+
+5. Display the Supplier name, Supplying Parts to a Job in the same City. 
+SELECT DISTINCT s.sname
+FROM sp
+JOIN s ON sp.`S#` = s.`S#`
+JOIN j on sp.`J#` = j.`J#`
+WHERE s.city = j.city;
+
++-------+
+| sname |
++-------+
+| Jones |
+| Blake |
+| Clark |
+| Adams |
++-------+
+4 rows in set (0.00 sec)
+
+ 6. Display the Part name that is ‘Red’ in color, and the Total Quantity sold for that 
+ part.
+SELECT p.pname , SUM(sp.qty)
+FROM p JOIN sp
+ON p.`P#` = sp.`P#`
+WHERE p.color = 'Red'
+GROUP BY p.pname;
+
++-------+-------------+
+| pname | SUM(sp.qty) |
++-------+-------------+
+| Nut   |        1000 |
+| Screw |        1300 |
+| Cog   |        1300 |
++-------+-------------+
+3 rows in set (0.01 sec)
+
+7. Display all the Quantity sold by Suppliers with the Status = 20. 
+SELECT s.sname,SUM(sp.qty)
+FROM sp JOIN s 
+ON sp.`S#` = s.`S#`
+WHERE s.status = 20
+GROUP BY s.sname;
+
++-------+-------------+
+| sname | SUM(sp.qty) |
++-------+-------------+
+| Smith |         900 |
+| Clark |         600 |
++-------+-------------+
+2 rows in set (0.00 sec)
+
+8. Display all the Parts and their Total Quantity for the parts with the  
+Weight > 14. 
+SELECT p.pname,SUM(sp.qty)
+FROM sp JOIN p
+ON sp.`P#` = p.`P#`
+WHERE p.weight > 14
+GROUP BY p.pname;
+
++-------+-------------+
+| pname | SUM(sp.qty) |
++-------+-------------+
+| Screw |        3500 |
+| Cog   |        1300 |
+| Bolt  |         300 |
++-------+-------------+
+3 rows in set (0.01 sec)
+
+9. Display all the Job names and City, which has bought more than 500 Parts. 
+SELECT j.jname , j.city, SUM(sp.qty)
+FROM j JOIN sp 
+ON j.`J#` = sp.`J#`
+GROUP BY j.`J#`,j.jname,j.city
+HAVING SUM(sp.qty)>500;
+
++----------+--------+-------------+
+| jname    | city   | SUM(sp.qty) |
++----------+--------+-------------+
+| Sorter   | Paris  |         800 |
+| Console  | Athens |        3300 |
+| Punch    | Rome   |        1200 |
+| Collator | London |        1100 |
+| Tape     | London |        1200 |
++----------+--------+-------------+
+5 rows in set (0.00 sec)
+
+10. Display all the Part names and Quantity sold that have a Weight less than 15. 
+SELECT p.pname,SUM(sp.qty)
+FROM sp JOIN p 
+ON sp.`P#` = p.`P#`
+WHERE p.weight < 15
+GROUP BY p.pname;
+
++-------+-------------+
+| pname | SUM(sp.qty) |
++-------+-------------+
+| Nut   |        1000 |
+| Cam   |        1100 |
+| Screw |        1300 |
++-------+-------------+
+3 rows in set (0.01 sec)
+
+11. Display all the Suppliers with the same Status as the supplier, ‘CLARK’.
+SELECT s1.sname,s1.status
+FROM s s1 JOIN s s2 
+ON s1.status = s2.status
+WHERE s2.sname = 'CLARK'
+  AND s1.sname <>'CLARK';
+
++-------+--------+
+| sname | status |
++-------+--------+
+| Smith |     20 |
++-------+--------+
+1 row in set (0.00 sec)
+
+12. Display all the Parts which have more Weight than any “Red” parts. 
+SELECT DISTINCT p1.pname,p1.weight,p1.color
+FROM p p1 JOIN p p2
+ON p1.weight > p2.weight
+WHERE p2.color = 'red';
+
++-------+--------+-------+
+| pname | weight | color |
++-------+--------+-------+
+| Bolt  |     17 | Green |
+| Screw |     17 | Blue  |
+| Screw |     14 | Red   |
+| Cog   |     19 | Red   |
++-------+--------+-------+
+4 rows in set (0.00 sec)
+
+13. Display all the Jobs going on in the same city as the job ‘TAPE’.
+SELECT j1.jname , j1.city
+FROM j j1 JOIN j j2
+ON j1.city = j2.city
+WHERE j2.jname = 'TAPE'
+  AND j1.jname <> 'TAPE';
+
++----------+--------+
+| jname    | city   |
++----------+--------+
+| Collator | London |
++----------+--------+
+1 row in set (0.01 sec)
+
+14. Display all the Parts with Weight less than any of the “Green” parts.
+SELECT DISTINCT p1.pname,p1.weight,p1.color
+FROM p p1 JOIN p p2
+ON p1.weight < p2.weight
+WHERE p2.color = 'green';
+
++-------+--------+-------+
+| pname | weight | color |
++-------+--------+-------+
+| Nut   |     12 | Red   |
+| Screw |     14 | Red   |
+| Cam   |     12 | Blue  |
++-------+--------+-------+
+3 rows in set (0.00 sec)
+
+15. Display the name of the Supplier who has sold the maximum Quantity (in one sale). 
+SELECT s.sname, MAX(sp.qty)
+FROM s JOIN sp
+ON s.`S#` = sp.`S#`
+GROUP BY s.sname
+ORDER BY MAX(sp.qty)DESC
+LIMIT 1;
+
++-------+-------------+
+| sname | MAX(sp.qty) |
++-------+-------------+
+| Adams |         800 |
++-------+-------------+
+1 row in set (0.01 sec)
+
+16. Display the name of the Supplier who has sold the maximum overall  
+Quantity (sum of Sales). 
+SELECT s.sname, SUM(sp.qty)
+FROM s JOIN sp
+ON s.`S#` = sp.`S#`
+GROUP BY s.sname
+ORDER BY SUM(sp.qty)DESC
+LIMIT 1;
+
++-------+-------------+
+| sname | SUM(sp.qty) |
++-------+-------------+
+| Jones |        3200 |
++-------+-------------+
+1 row in set (0.01 sec)
