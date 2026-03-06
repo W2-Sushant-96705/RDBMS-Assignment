@@ -309,15 +309,94 @@ Ans- SELECT employee_id, COUNT(job_id)
 
 9. Display job ID of jobs that were done by 2 or more employees for more 
    than 100 days individually. 
- 
+
+Ans- SELECT job_id ,COUNT(employee_id)
+     FROM job_history
+     WHERE (end_date - start_date) > 100
+     GROUP BY job_id
+     HAVING COUNT(*) >= 2;
+
++------------+--------------------+
+| job_id     | COUNT(employee_id) |
++------------+--------------------+
+| AC_ACCOUNT |                  2 |
+| ST_CLERK   |                  2 |
++------------+--------------------+
+2 rows in set (0.00 sec)
 
 10. Display the department ID, year of hiring, and the number of employees 
     who joined each department in each year. 
- 
+
+Ans- SELECT department_id, YEAR(hire_date), COUNT(employee_id)
+	 FROM employees
+	 GROUP BY department_id , YEAR(hire_date)
+	 ORDER BY department_id , YEAR(hire_date);
+
++---------------+-----------------+--------------------+
+| department_id | YEAR(hire_date) | COUNT(employee_id) |
++---------------+-----------------+--------------------+
+|          NULL |            2017 |                  1 |
+|            10 |            2013 |                  1 |
+|            20 |            2014 |                  1 |
+|            20 |            2015 |                  1 |
+|            30 |            2012 |                  1 |
+|            30 |            2013 |                  1 |
+|            30 |            2015 |                  2 |
+|            30 |            2016 |                  1 |
+|            30 |            2017 |                  1 |
+|            40 |            2012 |                  1 |
+|            50 |            2013 |                  3 |
+|            50 |            2014 |                  4 |
+|            50 |            2015 |                 12 |
+|            50 |            2016 |                 13 |
+|            50 |            2017 |                  9 |
+|            50 |            2018 |                  4 |
+|            60 |            2015 |                  1 |
+|            60 |            2016 |                  2 |
+|            60 |            2017 |                  2 |
+|            70 |            2012 |                  1 |
+|            80 |            2014 |                  5 |
+|            80 |            2015 |                 10 |
+|            80 |            2016 |                  7 |
+|            80 |            2017 |                  5 |
+|            80 |            2018 |                  7 |
+|            90 |            2011 |                  1 |
+|            90 |            2013 |                  1 |
+|            90 |            2015 |                  1 |
+|           100 |            2012 |                  2 |
+|           100 |            2015 |                  2 |
+|           100 |            2016 |                  1 |
+|           100 |            2017 |                  1 |
+|           110 |            2012 |                  2 |
++---------------+-----------------+--------------------+
+33 rows in set (0.01 sec)
 
 11. Display the count of employees joined in each month of the year 2017. 
  
- 
+11. Display the count of employees joined in each month of the year 2017. 
+
+Ans- SELECT monthname(hire_date),
+       COUNT(employee_id)
+	   FROM employees
+       WHERE YEAR(hire_date) = '2017'
+       GROUP BY monthname(hire_date);
+
++----------------------+--------------------+
+| monthname(hire_date) | COUNT(employee_id) |
++----------------------+--------------------+
+| May                  |                  2 |
+| February             |                  3 |
+| December             |                  3 |
+| August               |                  1 |
+| November             |                  2 |
+| January              |                  1 |
+| April                |                  1 |
+| October              |                  1 |
+| March                |                  3 |
+| June                 |                  2 |
++----------------------+--------------------+
+10 rows in set (0.00 sec)
+
 12. Display the details of departments in which the maximum salary is more 
     than 10000. 
 
