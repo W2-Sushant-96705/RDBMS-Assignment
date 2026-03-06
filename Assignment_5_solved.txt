@@ -1,8 +1,127 @@
 Name- Kale Sushant Adhirath
 RollNo.- 96705
 
+1. Display all the first names in lower case and the last names in upper case as the 
+   single column separated with ' - '. Provide the meaningful name to the column. 
+
+Ans- SELECT CONCAT (LOWER(FIRST_NAME), '-', UPPER(LAST_NAME)) AS FULL_NAME
+     FROM employees;
+
++-------------------+
+| FULL_NAME         |
++-------------------+
+| ellen-ABEL        |
+| sundar-ANDE       |
+| mozhe-ATKINSON    |
+| shelli-BAIDA      |
+| amit-BANDA        |
+| elizabeth-BATES   |
+| sarah-BELL        |
+| david-BERNSTEIN   |
+| laura-BISSOT      |
+| harrison-BLOOM    |
+| hermann-BROWN     |
+| alexis-BULL       |
+| anthony-CABRIO    |
+| gerald-CAMBRAULT  |
+| nanette-CAMBRAULT |
+| john-CHEN         |
+| kelly-CHUNG       |
+| karen-COLMENARES  |
+| curtis-DAVIES     |
+| pat-DAVIS         |
+| julia-DELLINGER   |
+| jennifer-DILLY    |
+| louise-DORAN      |
+| alberto-ERRAZURIZ |
+| britney-EVERETT   |
+| daniel-FAVIET     |
+| kevin-FEENEY      |
+| jean-FLEAUR       |
+| tayler-FOX        |
+| adam-FRIPP        |
+| lex-GARCIA        |
+| ki-GEE            |
+| girard-GEONI      |
+| william-GIETZ     |
+| douglas-GRANT     |
+| kimberely-GRANT   |
+| danielle-GREENE   |
+| nancy-GRUENBERG   |
+| peter-HALL        |
+| shelley-HIGGINS   |
+| guy-HIMURO        |
+| alyssa-HUTTON     |
+| valli-JACKSON     |
+| susan-JACOBS      |
+| alexander-JAMES   |
+| charles-JOHNSON   |
+| vance-JONES       |
+| payam-KAUFLING    |
+| alexander-KHOO    |
+| janette-KING      |
+| steven-KING       |
+| sundita-KUMAR     |
+| renske-LADWIG     |
+| james-LANDRY      |
+| david-LEE         |
+| den-LI            |
+| jack-LIVINGSTON   |
+| jason-MALLIN      |
+| steven-MARKLE     |
+| james-MARLOW      |
+| michael-MARTINEZ  |
+| mattea-MARVINS    |
+| randall-MATOS     |
+| allan-MCEWEN      |
+| samuel-MCLEOD     |
+| irene-MIKKILINENI |
+| bruce-MILLER      |
+| kevin-MOURGOS     |
+| julia-NAYER       |
+| diana-NGUYEN      |
+| donald-OCONNELL   |
+| christopher-OLSEN |
+| tj-OLSON          |
+| lisa-OZER         |
+| karen-PARTNERS    |
+| joshua-PATEL      |
+| randall-PERKINS   |
+| hazel-PHILTANKER  |
+| luis-POPP         |
+| trenna-RAJS       |
+| michael-ROGERS    |
+| nandita-SARCHAND  |
+| ismael-SCIARRA    |
+| john-SEO          |
+| sarath-SEWALL     |
+| john-SINGH        |
+| lindsey-SMITH     |
+| william-SMITH     |
+| stephen-STILES    |
+| martha-SULLIVAN   |
+| patrick-SULLY     |
+| jonathon-TAYLOR   |
+| winston-TAYLOR    |
+| sigal-TOBIAS      |
+| sean-TUCKER       |
+| oliver-TUVAULT    |
+| jose manuel-URMAN |
+| peter-VARGAS      |
+| timothy-VENZL     |
+| clara-VISHNEY     |
+| shanta-VOLLMAN    |
+| alana-WALSH       |
+| matthew-WEISS     |
+| jennifer-WHALEN   |
+| david-WILLIAMS    |
+| neena-YANG        |
+| eleni-ZLOTKEY     |
++-------------------+
+107 rows in set (0.00 sec)
+
 2. Display the first word of the job title. (Hint : Use substring_index).
- SELECT
+ Ans- SELECT
     ->     SUBSTRING_INDEX(job_title, ' ', 1) AS first_word
     -> FROM jobs;
 +----------------+
@@ -33,7 +152,7 @@ RollNo.- 96705
 
 3. Display the First name, last name and length of first name for the employees whose
 last name contains character ‘b’ anywhere after 3rd position.
-SELECT FIRST_NAME,last_name,LENGTH(first_name)
+Ans- SELECT FIRST_NAME,last_name,LENGTH(first_name)
     -> FROM employees
     -> WHERE last_name LIKE'___%b%';
 +------------+-----------+--------------------+
@@ -49,7 +168,7 @@ SELECT FIRST_NAME,last_name,LENGTH(first_name)
 
 4. Display the employee id, first name and last name of the employees whose first or
 last name includes a space in between.
- SELECT employee_id,first_name,last_name
+Ans-  SELECT employee_id,first_name,last_name
     -> FROM employees
     -> WHERE FIRST_NAME LIKE('% %') OR LAST_NAME LIKE('% %');
 +-------------+-------------+-----------+
@@ -61,7 +180,7 @@ last name includes a space in between.
 
 
 5. Display first name, salary, and round the salary to thousands.
- SELECT FIRST_NAME,salary,ROUND(salary,-3)
+ Ans- SELECT FIRST_NAME,salary,ROUND(salary,-3)
     -> FROM employees;
 +-------------+----------+------------------+
 | FIRST_NAME  | salary   | ROUND(salary,-3) |
@@ -179,7 +298,7 @@ last name includes a space in between.
 
 6. Display employee ID and the date on which he ended his previous job in the format as
 mentioned. (Format: Thursday, October 27th 2011)
- SELECT
+ Ans- SELECT
     ->     employee_id,
     ->     end_date,
     ->     DATE_FORMAT(end_date, '%W,%M %D %Y') AS Job_end_date
@@ -203,7 +322,7 @@ mentioned. (Format: Thursday, October 27th 2011)
 
 7. Display first name and date of first salary of the employees.
 (Consider 1st day of month as salary day. HINT: LAST_DAY).
-SELECT employee_id,first_name,hire_date
+Ans- SELECT employee_id,first_name,hire_date
        DATE_ADD(LAST_DAY(hire_date - INTERVAL 1 MONTH), INTERVAL 1 DAY) AS first_sal
        FROM employees;
 +-------------+-------------+------------+------------+
@@ -319,9 +438,150 @@ SELECT employee_id,first_name,hire_date
 +-------------+-------------+------------+------------+
 107 rows in set (0.01 sec)
 
+8. Display first name and experience of the employees in the format of number of years, 
+   months and days completed. 
+Ans- SELECT first_name, hire_date ,CONCAT(TIMESTAMPDIFF(YEAR,hire_date,NOW()),' Years ',
+      TIMESTAMPDIFF(MONTH,hire_date,NOW()) %12,' Months and ',
+      DATEDIFF(NOW(),hire_date + INTERVAL TIMESTAMPDIFF(MONTH,hire_date,NOW())MONTH),' Days')
+      AS EXPERIENCE
+FROM employees;
 
++-------------+------------+--------------------------------+
+| first_name  | hire_date  | EXPERIENCE                     |
++-------------+------------+--------------------------------+
+| Steven      | 2013-06-17 | 12 Years 8 Months and 12 Days  |
+| Neena       | 2015-09-21 | 10 Years 5 Months and 8 Days   |
+| Lex         | 2011-01-13 | 15 Years 1 Months and 16 Days  |
+| Alexander   | 2016-01-03 | 10 Years 1 Months and 26 Days  |
+| Bruce       | 2017-05-21 | 8 Years 9 Months and 8 Days    |
+| David       | 2015-06-25 | 10 Years 8 Months and 4 Days   |
+| Valli       | 2016-02-05 | 10 Years 0 Months and 24 Days  |
+| Diana       | 2017-02-07 | 9 Years 0 Months and 22 Days   |
+| Nancy       | 2012-08-17 | 13 Years 6 Months and 12 Days  |
+| Daniel      | 2012-08-16 | 13 Years 6 Months and 13 Days  |
+| John        | 2015-09-28 | 10 Years 5 Months and 1 Days   |
+| Ismael      | 2015-09-30 | 10 Years 5 Months and 1 Days   |
+| Jose Manuel | 2016-03-07 | 9 Years 11 Months and 22 Days  |
+| Luis        | 2017-12-07 | 8 Years 2 Months and 22 Days   |
+| Den         | 2012-12-07 | 13 Years 2 Months and 22 Days  |
+| Alexander   | 2013-05-18 | 12 Years 9 Months and 11 Days  |
+| Shelli      | 2015-12-24 | 10 Years 2 Months and 5 Days   |
+| Sigal       | 2015-07-24 | 10 Years 7 Months and 5 Days   |
+| Guy         | 2016-11-15 | 9 Years 3 Months and 14 Days   |
+| Karen       | 2017-08-10 | 8 Years 6 Months and 19 Days   |
+| Matthew     | 2014-07-18 | 11 Years 7 Months and 11 Days  |
+| Adam        | 2015-04-10 | 10 Years 10 Months and 19 Days |
+| Payam       | 2013-05-01 | 12 Years 10 Months and 0 Days  |
+| Shanta      | 2015-10-10 | 10 Years 4 Months and 19 Days  |
+| Kevin       | 2017-11-16 | 8 Years 3 Months and 13 Days   |
+| Julia       | 2015-07-16 | 10 Years 7 Months and 13 Days  |
+| Irene       | 2016-09-28 | 9 Years 5 Months and 1 Days    |
+| James       | 2017-01-14 | 9 Years 1 Months and 15 Days   |
+| Steven      | 2018-03-08 | 7 Years 11 Months and 21 Days  |
+| Laura       | 2015-08-20 | 10 Years 6 Months and 9 Days   |
+| Mozhe       | 2015-10-30 | 10 Years 4 Months and 1 Days   |
+| James       | 2015-02-16 | 11 Years 0 Months and 13 Days  |
+| TJ          | 2017-04-10 | 8 Years 10 Months and 19 Days  |
+| Jason       | 2014-06-14 | 11 Years 8 Months and 15 Days  |
+| Michael     | 2016-08-26 | 9 Years 6 Months and 3 Days    |
+| Ki          | 2017-12-12 | 8 Years 2 Months and 17 Days   |
+| Hazel       | 2018-02-06 | 8 Years 0 Months and 23 Days   |
+| Renske      | 2013-07-14 | 12 Years 7 Months and 15 Days  |
+| Stephen     | 2015-10-26 | 10 Years 4 Months and 3 Days   |
+| John        | 2016-02-12 | 10 Years 0 Months and 17 Days  |
+| Joshua      | 2016-04-06 | 9 Years 10 Months and 23 Days  |
+| Trenna      | 2013-10-17 | 12 Years 4 Months and 12 Days  |
+| Curtis      | 2015-01-29 | 11 Years 1 Months and 1 Days   |
+| Randall     | 2016-03-15 | 9 Years 11 Months and 14 Days  |
+| Peter       | 2016-07-09 | 9 Years 7 Months and 20 Days   |
+| John        | 2014-10-01 | 11 Years 5 Months and 0 Days   |
+| Karen       | 2015-01-05 | 11 Years 1 Months and 24 Days  |
+| Alberto     | 2015-03-10 | 10 Years 11 Months and 19 Days |
+| Gerald      | 2017-10-15 | 8 Years 4 Months and 14 Days   |
+| Eleni       | 2018-01-29 | 8 Years 1 Months and 1 Days    |
+| Sean        | 2015-01-30 | 11 Years 1 Months and 1 Days   |
+| David       | 2015-03-24 | 10 Years 11 Months and 5 Days  |
+| Peter       | 2015-08-20 | 10 Years 6 Months and 9 Days   |
+| Christopher | 2016-03-30 | 9 Years 11 Months and 1 Days   |
+| Nanette     | 2016-12-09 | 9 Years 2 Months and 20 Days   |
+| Oliver      | 2017-11-23 | 8 Years 3 Months and 6 Days    |
+| Janette     | 2014-01-30 | 12 Years 1 Months and 1 Days   |
+| Patrick     | 2014-03-04 | 11 Years 11 Months and 25 Days |
+| Allan       | 2014-08-01 | 11 Years 7 Months and 0 Days   |
+| Lindsey     | 2015-03-10 | 10 Years 11 Months and 19 Days |
+| Louise      | 2015-12-15 | 10 Years 2 Months and 14 Days  |
+| Sarath      | 2016-11-03 | 9 Years 3 Months and 26 Days   |
+| Clara       | 2015-11-11 | 10 Years 3 Months and 18 Days  |
+| Danielle    | 2017-03-19 | 8 Years 11 Months and 10 Days  |
+| Mattea      | 2018-01-24 | 8 Years 1 Months and 5 Days    |
+| David       | 2018-02-23 | 8 Years 0 Months and 6 Days    |
+| Sundar      | 2018-03-24 | 7 Years 11 Months and 5 Days   |
+| Amit        | 2018-04-21 | 7 Years 10 Months and 8 Days   |
+| Lisa        | 2015-03-11 | 10 Years 11 Months and 18 Days |
+| Harrison    | 2016-03-23 | 9 Years 11 Months and 6 Days   |
+| Tayler      | 2016-01-24 | 10 Years 1 Months and 5 Days   |
+| William     | 2017-02-23 | 9 Years 0 Months and 6 Days    |
+| Elizabeth   | 2017-03-24 | 8 Years 11 Months and 5 Days   |
+| Sundita     | 2018-04-21 | 7 Years 10 Months and 8 Days   |
+| Ellen       | 2014-05-11 | 11 Years 9 Months and 18 Days  |
+| Alyssa      | 2015-03-19 | 10 Years 11 Months and 10 Days |
+| Jonathon    | 2016-03-24 | 9 Years 11 Months and 5 Days   |
+| Jack        | 2016-04-23 | 9 Years 10 Months and 6 Days   |
+| Kimberely   | 2017-05-24 | 8 Years 9 Months and 5 Days    |
+| Charles     | 2018-01-04 | 8 Years 1 Months and 25 Days   |
+| Winston     | 2016-01-24 | 10 Years 1 Months and 5 Days   |
+| Jean        | 2016-02-23 | 10 Years 0 Months and 6 Days   |
+| Martha      | 2017-06-21 | 8 Years 8 Months and 8 Days    |
+| Girard      | 2018-02-03 | 8 Years 0 Months and 26 Days   |
+| Nandita     | 2014-01-27 | 12 Years 1 Months and 2 Days   |
+| Alexis      | 2015-02-20 | 11 Years 0 Months and 9 Days   |
+| Julia       | 2016-06-24 | 9 Years 8 Months and 5 Days    |
+| Anthony     | 2017-02-07 | 9 Years 0 Months and 22 Days   |
+| Kelly       | 2015-06-14 | 10 Years 8 Months and 15 Days  |
+| Jennifer    | 2015-08-13 | 10 Years 6 Months and 16 Days  |
+| Timothy     | 2016-07-11 | 9 Years 7 Months and 18 Days   |
+| Randall     | 2017-12-19 | 8 Years 2 Months and 10 Days   |
+| Sarah       | 2014-02-04 | 12 Years 0 Months and 25 Days  |
+| Britney     | 2015-03-03 | 10 Years 11 Months and 26 Days |
+| Samuel      | 2016-07-01 | 9 Years 8 Months and 0 Days    |
+| Vance       | 2017-03-17 | 8 Years 11 Months and 12 Days  |
+| Alana       | 2016-04-24 | 9 Years 10 Months and 5 Days   |
+| Kevin       | 2016-05-23 | 9 Years 9 Months and 6 Days    |
+| Donald      | 2017-06-21 | 8 Years 8 Months and 8 Days    |
+| Douglas     | 2018-01-13 | 8 Years 1 Months and 16 Days   |
+| Jennifer    | 2013-09-17 | 12 Years 5 Months and 12 Days  |
+| Michael     | 2014-02-17 | 12 Years 0 Months and 12 Days  |
+| Pat         | 2015-08-17 | 10 Years 6 Months and 12 Days  |
+| Susan       | 2012-06-07 | 13 Years 8 Months and 22 Days  |
+| Hermann     | 2012-06-07 | 13 Years 8 Months and 22 Days  |
+| Shelley     | 2012-06-07 | 13 Years 8 Months and 22 Days  |
+| William     | 2012-06-07 | 13 Years 8 Months and 22 Days  |
++-------------+------------+--------------------------------+
+107 rows in set (0.00 sec)
+
+9. Display the employee id, first name and joining date of the employees who joined in 
+   the month of august of any year. 
+Ans- SELECT employee_id , first_name , hire_date
+     FROM employees
+     WHERE MONTH(hire_date) = '08';
+
++-------------+------------+------------+
+| employee_id | first_name | hire_date  |
++-------------+------------+------------+
+|         108 | Nancy      | 2012-08-17 |
+|         109 | Daniel     | 2012-08-16 |
+|         119 | Karen      | 2017-08-10 |
+|         129 | Laura      | 2015-08-20 |
+|         134 | Michael    | 2016-08-26 |
+|         152 | Peter      | 2015-08-20 |
+|         158 | Allan      | 2014-08-01 |
+|         189 | Jennifer   | 2015-08-13 |
+|         202 | Pat        | 2015-08-17 |
++-------------+------------+------------+
+9 rows in set (0.01 sec)
+ 
 10. Display the details of employees who joined before the year 2015
-SELECT employee_id,hire_date FROM employees
+Ans- SELECT employee_id,hire_date FROM employees
     -> WHERE hire_date< '2015-01-01';
 +-------------+------------+
 | employee_id | hire_date  |
@@ -355,7 +615,7 @@ SELECT employee_id,hire_date FROM employees
 
 
 11. Display the number of days between system date and 1st January 2011.
- SELECT DATEDIFF(CURDATE(), '2011-01-01') AS days_difference;
+Ans- SELECT DATEDIFF(CURDATE(), '2011-01-01') AS days_difference;
 +-----------------+
 | days_difference |
 +-----------------+
@@ -365,7 +625,7 @@ SELECT employee_id,hire_date FROM employees
 
 
 12. Display number of employees joined after 15th of any month.
- SELECT COUNT(*) AS count
+Ans- SELECT COUNT(*) AS count
     -> FROM employees
     -> WHERE DAY(hire_date) > 15;
 +-------+
@@ -375,7 +635,7 @@ SELECT employee_id,hire_date FROM employees
 +-------+
 1 row in set (0.00 sec)
 13. Display third highest salary of employees.
-SELECT salary FROM employees
+Ans- SELECT salary FROM employees
     -> ORDER BY salary DESC
     -> LIMIT 3,1;
 +----------+
@@ -389,7 +649,7 @@ SELECT salary FROM employees
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 1. Display all the Suppliers, belonging to cities starting with the letter ‘L’
-SELECT * FROM s
+Ans- SELECT * FROM s
     -> WHERE city LIKE 'L%';
 +----+-------+--------+--------+
 | S# | Sname | status | city   |
@@ -401,7 +661,7 @@ SELECT * FROM s
 
 
 2. Display all the Jobs, with the third letter in JNAME as ‘n’
- SELECT * FROM j
+Ans-  SELECT * FROM j
     -> WHERE jname LIKE '__n%';
 +----+---------+--------+
 | J# | Jname   | City   |
@@ -413,7 +673,7 @@ SELECT * FROM s
 
 
 4. Display all the Supplier names in upper case.
-SELECT UPPER(sname) FROM s;
+Ans- SELECT UPPER(sname) FROM s;
 +--------------+
 | UPPER(sname) |
 +--------------+
@@ -426,7 +686,7 @@ SELECT UPPER(sname) FROM s;
 5 rows in set (0.01 sec
 
 4. Display all the Supplier names in lower case.
-SELECT LOWER(sname) FROM s;
+Ans- SELECT LOWER(sname) FROM s;
 +--------------+
 | LOWER(sname) |
 +--------------+
@@ -440,7 +700,7 @@ SELECT LOWER(sname) FROM s;
 
 
 6. Display the Supplier names and the lengths of the names
-SELECT sname,LENGTH(sname) FROM s;
+Ans- SELECT sname,LENGTH(sname) FROM s;
 +-------+---------------+
 | sname | LENGTH(sname) |
 +-------+---------------+
@@ -454,15 +714,16 @@ SELECT sname,LENGTH(sname) FROM s;
 
 
 7. Display the current day (e.g. Thursday).
-SELECT dayname(now());
+Ans- SELECT dayname(now());
 +----------------+
 | dayname(now()) |
 +----------------+
 | Sunday         |
 +----------------+
 1 row in set (0.00 sec)
+
 8. Display the minimum Status in the Supplier table.
-SELECT min(status) FROM s;
+Ans- SELECT min(status) FROM s;
 +-------------+
 | min(status) |
 +-------------+
@@ -472,7 +733,7 @@ SELECT min(status) FROM s;
 
 
 9. Display the maximum Weight in the Parts table
-SELECT MAX(weight) FROM p;
+Ans- SELECT MAX(weight) FROM p;
 +-------------+
 | MAX(weight) |
 +-------------+
@@ -480,10 +741,38 @@ SELECT MAX(weight) FROM p;
 +-------------+
 1 row in set (0.00 sec)
 10. Display the average Weight of the Parts
-SELECT avg(weight) FROM p;
+Ans- SELECT avg(weight) FROM p;
 +-------------+
 | avg(weight) |
 +-------------+
 |     15.1667 |
 +-------------+
 1 row in set (0.01 sec)
+
+11. Display the total Quantity sold for part ‘P1’.
+Ans- SELECT SUM(qty) AS TOTAL_QUANTITY
+     FROM sp
+     WHERE `P#` = 'p1';
+
++----------------+
+| TOTAL_QUANTITY |
++----------------+
+|           1000 |
++----------------+
+1 row in set (0.01 sec)
+
+12. Display all the Supplier names (with ‘la’ replaced by ‘ro’). 
+    HINT: REPLACE.
+Ans- SELECT sname,REPLACE(sname,'la','ro') AS new_name
+     FROM s ;
+
++-------+----------+
+| sname | new_name |
++-------+----------+
+| Smith | Smith    |
+| Jones | Jones    |
+| Blake | Broke    |
+| Clark | Crork    |
+| Adams | Adams    |
++-------+----------+
+5 rows in set (0.00 sec)
