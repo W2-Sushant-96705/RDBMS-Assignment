@@ -1,0 +1,99 @@
+Name-Kale Sushant Adhirath
+RollNo.- 96705
+
+1. Write a query to display the order amount, customer names and ratings of all customers where the amount is greater than the average amount from the orders table. 
+
+SELECT 
+    o.amt, 
+    c.cname, 
+    c.rating
+FROM orders o JOIN customers c 
+ON o.cnum = c.cnum
+WHERE o.amt > (SELECT AVG(amt) FROM orders);
+
++---------+---------+--------+
+| amt     | cname   | rating |
++---------+---------+--------+
+| 5160.45 | Liu     |    200 |
+| 9891.88 | Clemens |    100 |
+| 4723.00 | Clemens |    100 |
++---------+---------+--------+
+3 rows in set (0.08 sec)
+
+2. Write a query that selects the total amount in orders for each salesperson for whom this total is greater than the amount of the largest order in the table.
+
+
+SELECT snum, SUM(amt)
+FROM orders
+GROUP BY snum
+HAVING SUM(amt) > (SELECT MAX(amt) FROM orders);
+
++------+----------+
+| snum | SUM(amt) |
++------+----------+
+| 1001 | 15382.07 |
++------+----------+
+1 row in set (0.00 sec)
+
+3. Write a query that selects all customers whose ratings are equal to or greater than ANY of Serres’. (Hint: find all customers of serres salesperson). 
+SELECT * FROM customers 
+    WHERE rating >= ANY (SELECT rating FROM customers 
+    WHERE snum = (SELECT snum FROM salespeople 
+                    WHERE sname = 'Serres'));
+
+
+
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+4 rows in set (0.01 sec)
+
+4. Write a query that selects all orders for amounts greater than any for the customers in London
+
+SELECT * FROM orders
+WHERE amt > ANY(SELECT amt FROM orders
+                WHERE cnum IN
+                (SELECT cnum FROM customers 
+                 WHERE city = 'london'));
+
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-04 | 2006 | 1001 |
+| 3011 | 9891.88 | 1990-10-04 | 2006 | 1001 |
++------+---------+------------+------+------+
+6 rows in set (0.02 sec)
+
+5. Find salespeople number, name and city who have multiple customers.
+Display the count of customers as well. 
+
+SELECT 
+    snum, 
+    sname, 
+    city,
+        (SELECT COUNT(*) FROM customers c 
+         WHERE c.snum = s.snum) AS customer_count
+         FROM salespeople s
+         WHERE snum IN (
+                        SELECT snum 
+                        FROM customers 
+                        GROUP BY snum 
+                        HAVING COUNT(cnum) > 1);
+
+
++------+--------+----------+----------------+
+| snum | sname  | city     | customer_count |
++------+--------+----------+----------------+
+| 1001 | Peel   | London   |              2 |
+| 1002 | Serres | San Jose |              2 |
++------+--------+----------+----------------+
+2 rows in set (0.10 sec)
